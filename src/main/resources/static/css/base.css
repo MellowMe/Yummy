@@ -1,0 +1,123 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: Helvetica, Microsoft YaHei, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 22px;
+    color: #333;
+    background-color: #f7f7f7;
+}
+
+.content{
+    overflow: hidden;
+}
+
+div.header-wrap {
+    height: 50px;
+    background-color: #1e89e0;
+    box-sizing: border-box;
+}
+
+div.header, div.content{
+    width: 960px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.nav-list {
+    list-style: none;
+    float: left;
+}
+
+.nav-list li ,.nav-list a{
+    float: left;
+    line-height: 50px;
+    margin-right: 40px;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.nav-list a{
+    text-decoration: none;
+}
+
+
+.search{
+    overflow: hidden;
+    margin: 10px;
+}
+
+div.search-panel {
+    float: right;
+    height: 36px;
+    padding: 12px 0;
+    overflow: hidden;
+}
+
+
+#searchInput {
+    padding: 6px;
+    border: 2px #999999 solid;
+    float: left;
+    line-height: 16px;
+}
+
+.search-button {
+    float: left;
+    font-family: 楷体, Microsoft Yahei, 宋体, serif;
+    font-size: 16px;
+    padding: 6px;
+    line-height: 20px;
+    background-color: #999999;
+    color: #fff;
+    cursor: pointer;
+}
+
+.login-panel,.register-panel{
+    position: fixed;
+    left: 40vw;
+    top: 25vh;
+    border: #333333 1px solid;
+    text-align: center;
+    background-color: #f7f7f6;
+    display: none;
+}
+.login-panel {
+    z-index: 5;
+}
+.register-panel{
+    z-index: 5;
+}
+
+.login-wrap{
+    margin: 30px 75px;
+}
+.register-wrap{
+    margin: 50px 100px 30px;
+}
+.login-wrap input, .login-wrap button,.register-panel input,.register-panel button{
+    margin: 10px 0;
+    width: 250px;
+    padding:5px;
+}
+
+.login-wrap h1{
+    font-family: "Segoe Print",sans-serif;
+    margin-bottom: 10px;
+}
+
+.login-close,.register-close{
+    float: right;
+    font-size: 25px;
+    line-height: normal;
+    margin: 4px 10px;
+    cursor: pointer;
+}
+
+table input{
+    padding: 2px;
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nju.yufan.yummy.dao.AddressDao">
+    <select id="getAddresses" resultType="address">
+        select * from addresses where userid = #{userid}
+    </select>
+
+    <select id="getDefault" resultType="address">
+        select * from addresses where userid = #{userid} and is_default=1
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="address">
+        insert into addresses (userid, address, is_default)
+        values (#{userid}, #{address}, #{isDefault})
+    </insert>
+
+    <delete id="deleteById">
+        delete from addresses where id = #{id}
+    </delete>
+
+    <update id="setDefault">
+        update addresses set is_default = #{arg1} where id = #{arg0}
+    </update>
+
+    <update id="flipDefault">
+        update addresses
+        <set>
+            <if test="is_default==1">is_default = 0 </if>
+            <if test="is_default==0">is_default = 1 </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

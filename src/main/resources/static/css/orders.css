@@ -1,0 +1,28 @@
+.order {
+    margin-bottom: 20px;
+    background: #fff;
+    overflow: hidden;
+    border: 1px solid #e5e5e5;
+}
+
+.sign{
+    border-radius: 50%;
+    width: 36px;
+}
+.order a{
+    text-decoration: none;
+    cursor: pointer;
+    color: #333;
+}
+.picture{
+    width:48px;
+}
+.summary{
+    float: left;
+    margin-top: 10px;
+}
+.items{
+    float: left;
+    margin-right: 30px;
+    margin-left: 10px;
+}

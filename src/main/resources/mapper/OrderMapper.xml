@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nju.yufan.yummy.dao.OrderDao">
+    <resultMap id="detailOrderList" type="order">
+        <id property="id" column="oid"/>
+        <result property="restid" column="rid"/>
+        <result property="addressid" column="aid"/>
+        <association property="restaurant" javaType="restaurant">
+            <id property="id" column="rid"/>
+            <result property="name" column="r_name"/>
+        </association>
+        <association property="address" javaType="address">
+            <id property="id" column="aid"/>
+        </association>
+        <collection property="items" ofType="orderItem">
+            <id property="id" column="iid"/>
+            <result property="price" column="i_price"/>
+            <association property="dish" javaType="dish">
+                <id property="id" column="did"/>
+                <result property="name" column="d_name"/>
+            </association>
+        </collection>
+    </resultMap>
+
+
+    <resultMap id="rest_order_list" type="order">
+        <id property="id" column="oid"/>
+        <result property="restid" column="rid"/>
+        <result property="addressid" column="aid"/>
+        <association property="user" javaType="user">
+            <id property="id" column="uid"/>
+            <result property="phone" column="u_phone"/>
+        </association>
+        <association property="address" javaType="address">
+            <id property="id" column="aid"/>
+        </association>
+        <collection property="items" ofType="orderItem">
+            <id property="id" column="iid"/>
+            <result property="price" column="i_price"/>
+            <association property="dish" javaType="dish">
+                <id property="id" column="did"/>
+                <result property="name" column="d_name"/>
+            </association>
+        </collection>
+    </resultMap>
+
+    <resultMap id="orderWithDishes" type="order">
+        <id property="id" column="oid"/>
+        <result property="restid" column="rid"/>
+        <result property="addressid" column="aid"/>
+        <result property="userid" column="uid"/>
+        <collection property="items" ofType="orderItem">
+            <id property="id" column="iid"/>
+            <result property="price" column="i_price"/>
+            <association property="dish" javaType="dish">
+                <id property="id" column="did"/>
+                <result property="name" column="d_name"/>
+                <result property="price" column="d_price"/>
+            </association>
+        </collection>
+    </resultMap>
+
+    <select id="getById" resultMap="orderWithDishes">
+         select
+            o.id as oid,
+            o.userid as uid,
+            o.addressid as aid,
+            i.id as iid,
+            d.id as did,
+            time, money, status,
+            number,
+            d.name as d_name, i.price as i_price,num,d.price as d_price
+        from orders o
+        inner join orderitems i on o.id = i.orderid
+        inner join dishes d on i.dishid = d.id
+        where o.id = #{oid}
+    </select>
+
+    <select id="getOrders4Rest" resultMap="rest_order_list">
+        select
+            o.id as oid,
+            u.id as uid,
+            a.id as aid,
+            i.id as iid,
+            d.id as did,
+            o.userid, time, money, status,
+            u.phone as u_phone, username,
+            address,
+            number,
+            d.name as d_name, i.price as i_price
+        from orders o
+        inner join users u on o.userid = u.id
+        inner join addresses a on o.addressid = a.id
+        inner join orderitems i on o.id = i.orderid
+        inner join dishes d on i.dishid = d.id
+        where o.restid = #{restid} and status in (2, 3)
+    </select>
+
+    <select id="getOrders" resultMap="detailOrderList">
+        select
+            o.id as oid,
+            r.id as rid,
+            a.id as aid,
+            i.id as iid,
+            d.id as did,
+            o.userid, time, money, status,
+            r.name as r_name, sign,
+            address,
+            number,
+            d.name as d_name, picture, i.price as i_price
+        from orders o
+        inner join restaurants r on o.restid = r.id
+        inner join addresses a on o.addressid = a.id
+        inner join orderitems i on o.id = i.orderid
+        inner join dishes d on i.dishid = d.id
+        where o.userid = #{userid}
+    </select>
+
+    <update id="setStatus">
+        update orders set status=#{arg1} where id = #{arg0}
+    </update>
+
+    <insert id="insert" parameterType="order" keyProperty="id" useGeneratedKeys="true">
+        insert into orders(userid, restid, addressid, time, money) values (#{userid}, #{restid}, #{addressid}, #{time},#{money})
+    </insert>
+
+    <delete id="delete">
+        delete from orders where id=#{id}
+    </delete>
+</mapper>

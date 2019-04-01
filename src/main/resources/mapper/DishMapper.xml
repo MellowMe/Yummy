@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nju.yufan.yummy.dao.DishDao">
+    <select id="getDishes" resultType="dish">
+        select * from dishes where restid = #{restid}
+    </select>
+
+    <select id="getById" resultType="dish">
+        select * from dishes where id = #{id}
+    </select>
+    
+    <update id="setNum">
+        update dishes set num=#{arg1} where id=#{arg0}
+    </update>
+
+    <delete id="delete">
+        delete from dishes where  id = #{id}
+    </delete>
+</mapper>

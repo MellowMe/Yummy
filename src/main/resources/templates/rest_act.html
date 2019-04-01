@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<!--<meta http-equiv="refresh" content="20">-->
+	<title>Yummy 商家端</title>
+	<title>YUMMY</title>
+	<link rel="stylesheet" type="text/css" href="/css/base.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/rest_act.css"/>
+</head>
+<body>
+<div id="main">
+	<div class="header-wrap">
+		<div class="header">
+			<ul class="nav-list">
+				<a th:href="@{'/'}" style="font-family: Segoe Print">YUMMY</a>
+				<a th:href="@{'/rest'}">首页</a>
+				<li th:if="${session.rest} == null" id="tologin">登录</li>
+				<li th:if="${session.rest} == null" id="toregister">注册</li>
+				<a th:if="${session.rest} != null" th:href="@{'/rest/zone'}">个人中心</a>
+				<a th:if="${session.rest} != null" th:href="@{'/rest/operatePage'}">处理订单</a>
+				<a th:if="${session.rest} != null" th:href="@{'/rest/addDish'}">添加菜品</a>
+			</ul>
+		</div>
+	</div>
+	<div class="content">
+		<div th:if="${session.rest} != null" class="rest-info">
+			<div class="rest-signboard">
+				<img class="rest-sign" th:src="@{'/img/'+${session.rest.sign}}"/>
+				<h2 class="rest-name" th:text="${session.rest.name}"></h2>
+			</div>
+		</div>
+		<div class="order"   th:each="order:${orders}">
+			<div class="items">
+				<p th:each="item:${order.items}">
+					<span th:text="${item.dish.name}+' x '+${item.number}"></span>
+					￥<span th:text="${item.price}*${item.number}"></span>
+				</p>
+			</div>
+			<div class="summary">
+				<p th:text="'总金额：' + ${order.money}+'元'"></p>
+				<p>顾客：<span th:text="${order.user.username}"></span></p>
+				<p>
+					送餐地址：
+					<span th:text="${order.address.address}"></span>
+				</p>
+				<p th:switch="${order.status}">
+					<input type="text" hidden th:value="${order.id}">
+					<span th:case="2">状态：未派送<button class="deliver">派送</button><button class="cancel">取消</button></span>
+					<span th:case="3">状态：派送中<button class="done">送达</button></span>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="login-panel">
+	<span class="login-close"> &#10005; </span>
+	<div class="login-wrap">
+		<h1>Welcome</h1>
+		<p><input id="login-name" type="text" placeholder="商家码" required/></p>
+		<p><input id="login-psw" type="password" placeholder="密码" required></p>
+		<button id="login-btn" type="submit">登 录</button>
+	</div>
+</div>
+<div class="register-panel">
+	<span class="register-close"> &#10005; </span>
+	<form class="register-wrap">
+		<p><input id="name" type="text" placeholder="店名" required></p>
+		<p><input id="location" type="text" placeholder="地址" required/></p>
+		<p><input id="phone" type="text" placeholder="电话号码" required/></p>
+		<p><input id="psw" type="password" placeholder="设置密码" required></p>
+		<button id="register-btn" type="button">注 册</button>
+	</form>
+</div>
+<script src="/js/rest.js"></script>
+<script src="/js/rest_act.js"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nju.yufan.yummy.dao.UserDao">
+    <select id="login" resultType="user">
+       select * from users
+        where email = #{arg0}
+          and password = #{arg1}
+    </select>
+
+    <insert id="insert" parameterType="user" useGeneratedKeys="true" keyProperty="id">
+        insert into users (email, username, password, phone, alive, token, token_expire_time)
+        values (#{email}, #{username}, #{password}, #{phone}, 0, #{token}, #{tokenExpireTime})
+    </insert>
+
+    <resultMap id="tokenOfUser" type="token">
+        <result property="expireTime" column="token_expire_time"/>
+    </resultMap>
+
+    <select id="getToken" resultMap="tokenOfUser">
+        select token, token_expire_time
+        from users
+        where id = #{id}
+    </select>
+
+    <select id="getId" resultType="java.lang.Integer">
+        select id
+        from users
+        where email = #{email}
+    </select>
+
+    <update id="activate">
+        update users
+        set alive = 1
+        where id = #{id}
+    </update>
+
+    <update id="pay">
+        update users
+        set balance = balance - #{arg1},
+            spend   = spend + #{arg1}
+        where id = #{arg0}
+    </update>
+
+    <update id="recharge">
+        update users
+        set balance = balance + #{arg1},
+            spend   = spend - #{arg1}
+        where id = #{arg0}
+    </update>
+
+    <update id="logoff" >
+        update users set alive = 0 where id=#{id}
+    </update>
+    <update id="update" parameterType="user">
+        update users set username = #{username}, password=#{password},phone=#{phone} where id = #{id}
+    </update>
+</mapper>

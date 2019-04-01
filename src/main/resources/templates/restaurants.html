@@ -1,0 +1,6 @@
+<div xmlns:th="http://www.thymeleaf.org" th:each="rest:${restaurants}" class="rest">
+	<span th:text="${rest.getId()}"></span>
+	<img  th:src="@{'/img/'+${rest.getSign()}}">
+	<h3 th:text="${rest.getName()}"></h3>
+	<p th:text="${rest.getLocation()}"></p>
+</div>

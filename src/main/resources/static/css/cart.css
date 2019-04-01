@@ -1,0 +1,127 @@
+.col-info {
+    line-height: 40px;
+    border-bottom: 1px solid #e5e5e5;
+    overflow: hidden;
+}
+
+.col1 {
+    float: left;
+    width: 45%;
+    overflow: hidden;
+}
+
+.col2 {
+    float: left;
+    width: 16%;
+}
+
+.col3 {
+    float: left;
+    width: 16%;
+}
+
+.col4 {
+    float: left;
+    width: 16%;
+}
+
+.col5 {
+    float: left;
+    width: 7%;
+}
+
+.rest span {
+    display: none;
+}
+
+.rest {
+    margin: 10px 15px;
+    line-height: 1.2;
+    cursor: pointer;
+}
+
+.item {
+    border: #e6e6e6 1px solid;
+    overflow: hidden;
+    padding: 10px;
+}
+
+.item img {
+    float: left;
+    width: 80px;
+}
+
+.dish-name {
+    float: left;
+    margin-left: 15px;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.quantity {
+    width: 6em;
+}
+
+.delete-btn {
+    cursor: pointer;
+}
+
+.pay {
+    line-height: 40px;
+    border: #e6e6e6 1px solid;
+    overflow: hidden;
+}
+
+.pay-btn {
+    height: 40px;
+    width: 80px;
+    float: right;
+    background: #ea6f5a;
+    font-size: 18px;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+}
+
+.summary {
+    float: right;
+    margin-right: 50px;
+}
+
+.cart-rest{
+    margin: 15px;
+}
+
+#order-panel,#pay-panel{
+    position: fixed;
+    left: 40vw;
+    top: 25vh;
+    border: #333333 1px solid;
+    text-align: center;
+    background-color: #f7f7f6;
+    display: none;
+    overflow: hidden;
+    padding: 15px 25px;
+}
+.wrap{
+    width: 300px;
+    height: 150px;
+}
+.addresses, .wrap p{
+    margin-bottom: 5px;
+}
+.order-panel{
+    z-index: 20;
+}
+
+.pay-panel{
+    z-index: 30;
+}
+
+.order-close,.pay-close{
+    float: right;
+    font-size: 25px;
+    line-height: normal;
+    margin: 4px 10px;
+    cursor: pointer;
+}

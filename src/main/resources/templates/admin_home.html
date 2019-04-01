@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Yummy 经理端</title>
+	<link rel="stylesheet" type="text/css" href="/css/base.css"/>
+</head>
+<body>
+<div id="main">
+	<div class="header-wrap">
+		<div class="header">
+			<ul class="nav-list">
+				<a th:href="@{'/'}" style="font-family: Segoe Print ">YUMMY</a>
+				<li id="tologin">登录</li>
+			</ul>
+		</div>
+	</div>
+	<div class="content">
+		<div th:each="pair:${pairs}">
+			<button class="refuse">否决</button>
+			<button class="accept">通过</button>
+			<table border="1">
+				<tr>
+					<th th:text="${pair.rest.id}"></th>
+					<th>修改前</th>
+					<th>修改后</th>
+				</tr>
+				<tr>
+					<td>店铺头像：</td>
+					<td><img width="100px" th:src="@{'/img/'+${pair.rest.sign}}"></td>
+					<td><img width="100px" th:src="@{'/img/'+${pair.back.sign}}"></td>
+				</tr>
+				<tr>
+					<td>店名：</td>
+					<td th:text="${pair.rest.name}"></td>
+					<td th:text="${pair.back.name}"></td>
+				</tr>
+				<tr>
+					<td>类型：</td>
+					<td th:text="${pair.rest.type}"></td>
+					<td th:text="${pair.back.type}"></td>
+				</tr>
+				<tr>
+					<td>地址：</td>
+					<td th:text="${pair.rest.location}"></td>
+					<td th:text="${pair.back.location}"></td>
+				</tr>
+				<tr>
+					<td>电话：</td>
+					<td th:text="${pair.rest.phone}"></td>
+					<td th:text="${pair.back.phone}"></td>
+				</tr>
+				<tr>
+					<td>营业时间：</td>
+					<td th:text="${pair.rest.openhours}"></td>
+					<td th:text="${pair.back.openhours}"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+</div>
+
+<div class="login-panel">
+	<span class="login-close"> &#10005; </span>
+	<div class="login-wrap">
+		<h1>Welcome</h1>
+		<p><input id="login-name" type="text" placeholder="管理员名称" required/></p>
+		<p><input id="login-psw" type="password" placeholder="密码" required></p>
+		<button id="login-btn" type="submit">登 录</button>
+	</div>
+</div>
+</body>
+<script src="/js/admin.js"></script>
+</html>

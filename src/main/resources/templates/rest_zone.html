@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Yummy 商家端</title>
+	<title>YUMMY</title>
+	<link rel="stylesheet" type="text/css" href="/css/base.css"/>
+</head>
+<body>
+<div id="main">
+	<div class="header-wrap">
+		<div class="header">
+			<ul class="nav-list">
+				<a th:href="@{'/'}" style="font-family: Segoe Print">YUMMY</a>
+				<a th:href="@{'/rest'}">首页</a>
+				<li th:if="${session.rest} == null" id="tologin">登录</li>
+				<li th:if="${session.rest} == null" id="toregister">注册</li>
+				<a th:if="${session.rest} != null" th:href="@{'/rest/zone'}">个人中心</a>
+				<a th:if="${session.rest} != null" th:href="@{'/rest/operatePage'}">处理订单</a>
+				<a th:if="${session.rest} != null" th:href="@{'/rest/addDish'}">添加菜品</a>
+			</ul>
+		</div>
+	</div>
+	<div class="content">
+		<p th:if="${back!=null}">您上次的修改仍在审批中...</p>
+		<form th:if="${session.rest} != null" class="info" enctype="multipart/form-data">
+			<table border="1">
+				<tr>
+					<th colspan="2" style="text-align: center">商家信息</th>
+				</tr>
+				<tr>
+					<td>店名：</td>
+					<td><input type="text" id="rest-name" name="name" th:value="${session.rest.name}"></td>
+				</tr>
+				<tr>
+					<td>店铺头像：</td>
+					<td><span th:text="${session.rest.sign}" style="display: none"></span><img width="100"  style="cursor: pointer" class="rest-sign" th:src="@{'/img/'+${session.rest.sign}}"/><input hidden id="sign" type="file" name="sign" accept="image/*"> </td>
+				</tr>
+				<tr>
+					<td>商家码：</td>
+					<td th:text="${session.rest.id}"></td>
+				</tr>
+				<tr>
+					<td>密码：</td>
+					<td><input id="password" type="password" name="password" th:value="${session.rest.password}"></td>
+				</tr>
+				<tr>
+					<td>地址：</td>
+					<td><input type="text"  id="rest-location" name="location" th:value="${session.rest.location}"></td>
+				</tr>
+				<tr>
+					<td>电话号码：</td>
+					<td><input type="text" id="rest-phone" name="phone" th:value="${session.rest.phone}"></td>
+				</tr>
+				<tr>
+					<td>类型：</td>
+					<td><span th:text="${session.rest.type}" style="display: none"></span><select id="type" name="type">
+						<option value="中式快餐" th:selected="${session.rest.type=='中式快餐'}">中式快餐</option>
+						<option value="特色菜系" th:selected="${session.rest.type=='特色菜系'}">特色菜系</option>
+						<option value="异国料理" th:selected="${session.rest.type=='异国料理'}">异国料理</option>
+						<option value="西式快餐" th:selected="${session.rest.type=='西式快餐'}">西式快餐</option>
+						<option value="风味小吃" th:selected="${session.rest.type=='风味小吃'}">风味小吃</option>
+						<option value="饮料甜点" th:selected="${session.rest.type=='饮料甜点'}">饮料甜点</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td>营业时间：</td>
+					<td><input type="text" id="openhours" name="openhours" th:value="${session.rest.openhours}"></td>
+				</tr>
+				<tr>
+					<td>营业额：</td>
+					<td th:text="${session.rest.turnover}"></td>
+				</tr>
+			</table>
+			<input class="reset-old" type="reset" value="重置" hidden><button type="button" class="reset">重置</button> <button class="submit" type="button">保存</button>
+		</form>
+	</div>
+</div>
+
+<div class="login-panel">
+	<span class="login-close"> &#10005; </span>
+	<div class="login-wrap">
+		<h1>Welcome</h1>
+		<p><input id="login-name" type="text" placeholder="商家码" required/></p>
+		<p><input id="login-psw" type="password" placeholder="密码" required></p>
+		<button id="login-btn" type="submit">登 录</button>
+	</div>
+</div>
+<div class="register-panel">
+	<span class="register-close"> &#10005; </span>
+	<form class="register-wrap">
+		<p><input id="name" type="text" placeholder="店名" required></p>
+		<p><input id="location" type="text" placeholder="地址" required/></p>
+		<p><input id="phone" type="text" placeholder="电话号码" required/></p>
+		<p><input id="psw" type="password" placeholder="设置密码" required></p>
+		<button id="register-btn" type="button">注 册</button>
+	</form>
+</div>
+<script src="/js/rest.js"></script>
+<script src="/js/rest_zone.js"></script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Yummy 购物车</title>
+	<link rel="stylesheet" type="text/css" href="/css/cart.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/base.css"/>
+</head>
+<body>
+<div id="main">
+	<div class="header-wrap">
+		<div class="header">
+			<ul class="nav-list">
+				<a th:href="@{'/'}" style="font-family: Segoe Print ">YUMMY</a>
+				<li th:if="${session.user} == null" id="tologin">登录</li>
+				<li th:if="${session.user} == null" id="toregister">注册</li>
+				<li th:if="${session.user} != null" th:text="${session.user.getUsername()}"></li>
+				<a th:if="${session.user} != null" th:href="@{'/user/zone'}">个人中心</a>
+				<a th:if="${session.user} != null" th:href="@{'/user/orders'}">我的订单</a>
+				<a th:href="@{'/user/cart'}">购物车</a>
+			</ul>
+		</div>
+	</div>
+	<div class="content">
+		<div class="search">
+			<div class="search-panel">
+				<input id="searchInput" type="text" size="48" placeholder="搜索商家、美食">
+				<span class="search-button">搜索</span>
+			</div>
+		</div>
+		<div class="col-info">
+			<div class="col1">&emsp;&emsp;商品信息</div>
+			<div class="col2">单价</div>
+			<div class="col3">数量</div>
+			<div class="col4">金额</div>
+			<div class="col5">操作</div>
+		</div>
+		<div th:each="entry:${session.cart}" class="cart-rest">
+			<div class="rest">
+				<span th:text="${entry.getKey().getId()}"></span>
+				<p th:text="'餐厅：'+${entry.getKey().getName()}"></p>
+			</div>
+			<div class="item" th:each="item:${entry.getValue()}">
+				<div class="col1">
+					<img th:src="@{'/img/'+${item.getKey().getPicture()}}">
+					<p class="dish-name" th:text="${item.getKey().getName()}"></p>
+				</div>
+				<div class="col2" th:text="'￥'+${item.getKey().getPrice()}">
+				</div>
+				<div class="col3">
+					<input type="hidden" th:value="${item.getKey().getId()}">
+					<input class="quantity" type="number" step="1" min="1" th:value="${item.getValue()}" max="100">
+				</div>
+				<div class="col4"><span
+						th:text="'￥'+${#numbers.formatDecimal(item.getKey().getPrice() * item.getValue(),0,1)}"
+						class="little-sum"></span></div>
+				<div class="col5"><span class="delete-btn">删除</span></div>
+			</div>
+			<div class="pay">
+				<span class="pay-btn">去结算</span>
+				<span class="summary" th:text="'总价：'+'￥'+${money.get(entry.getKey())}"></span>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="login-panel">
+	<span class="login-close"> &#10005; </span>
+	<div class="login-wrap">
+		<h1>Welcome</h1>
+		<p><input id="login-name" type="text" placeholder="邮箱" required/></p>
+		<p><input id="login-psw" type="password" placeholder="密码" required></p>
+		<button id="login-btn" type="submit">登 录</button>
+	</div>
+</div>
+<div class="register-panel">
+	<span class="register-close"> &#10005; </span>
+	<form class="register-wrap">
+		<p><input id="email" type="email" placeholder="邮箱" required></p>
+		<p><input id="register-name" type="text" placeholder="用户名" required/></p>
+		<p><input id="phone" type="text" placeholder="电话号码" required/></p>
+		<p><input id="psw" type="password" placeholder="设置密码" required></p>
+		<button id="register-btn" type="button">注 册</button>
+	</form>
+</div>
+<div th:if="${addresses!=null}" id="order-panel">
+	<span class="order-close"> &#10005; </span>
+	<div class="wrap">
+		<form class="addresses">
+			<p th:each="address:${addresses}" class="address">
+				<input type="text" th:value="${address.id}" hidden>
+				<span  th:text="${address.address}"></span>
+				<input name="ad" type="radio" th:checked="${address.isDefault()}">
+			</p>
+			<p class="address"><input type="text" id="address-write" placeholder="输入新地址"><input name="ad" type="radio"></p>
+		</form>
+		<p>您是<span th:text="${session.user.level}"></span>级会员，享受<span class="exempt" th:text="${session.user.level}"></span>元减免
+		</p>
+		<p> 实际要付：<span class="money"></span>元
+			<button class="make-order">去支付</button>
+		</p>
+	</div>
+</div>
+<div id="pay-panel">
+	<span class="pay-close"> &#10005; </span>
+	<div class="wrap">
+		<input type="text" hidden class="restid">
+		<input type="text" hidden class="oid">
+		<p>金额:￥<span id="money"></span></p>
+		<p>支付密码：<input type="password"></p>
+		<p><button id="do-pay">支付</button></p>
+	</div>
+</div>
+<script src="/js/cart.js"></script>
+<script src="/js/base.js"></script>
+</body>
+</html>

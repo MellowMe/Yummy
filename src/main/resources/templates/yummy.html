@@ -1,0 +1,77 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>YUMMY</title>
+	<link rel="stylesheet" type="text/css" href="/css/yummy.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/base.css"/>
+</head>
+<body>
+<div id="main">
+	<div class="header-wrap">
+		<div class="header">
+			<ul class="nav-list">
+				<a th:href="@{'/'}" style="font-family: Segoe Print ">YUMMY</a>
+				<li th:if="${session.user} == null" id="tologin">登录</li>
+				<li th:if="${session.user} == null" id="toregister">注册</li>
+				<li th:if="${session.user} != null" th:text="${session.user.getUsername()}"></li>
+				<a th:if="${session.user} != null" th:href="@{'/user/zone'}">个人中心</a>
+				<a th:if="${session.user} != null" th:href="@{'/user/orders'}">我的订单</a>
+				<a th:href="@{'/user/cart'}">购物车</a>
+			</ul>
+		</div>
+	</div>
+	<div class="content">
+		<div class="search">
+			<div class="search-panel">
+				<input id="searchInput" type="text" size="48" placeholder="搜索商家、美食">
+				<span class="search-button">搜索</span>
+			</div>
+		</div>
+		<div class="rest-cate-panel">
+			<div class="cate-label ">商家分类:</div>
+			<div>
+				<span id="all-rest-btn" class="rest-cate">全部</span>
+				<span class="rest-cate">中式快餐</span>
+				<span class="rest-cate">特色菜系</span>
+				<span class="rest-cate">异国料理</span>
+				<span class="rest-cate">西式快餐</span>
+				<span class="rest-cate">风味小吃</span>
+				<span class="rest-cate">饮料甜点</span>
+			</div>
+		</div>
+		<div class="rests">
+			<div th:each="rest:${restaurants}" class="rest">
+				<span th:text="${rest.getId()}"></span>
+				<img th:src="@{'/img/'+${rest.getSign()}}">
+				<h3 th:text="${rest.getName()}"></h3>
+				<p th:text="${rest.getLocation()}"></p>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="login-panel">
+	<span class="login-close"> &#10005; </span>
+	<div class="login-wrap">
+		<h1>Welcome</h1>
+		<p><input id="login-name" type="text" placeholder="邮箱" required/></p>
+		<p><input id="login-psw" type="password" placeholder="密码" required></p>
+		<button id="login-btn" type="submit">登 录</button>
+	</div>
+</div>
+<div class="register-panel">
+	<span class="register-close"> &#10005; </span>
+	<form class="register-wrap">
+		<p><input id="email" type="email" placeholder="邮箱" required></p>
+		<p><input id="register-name" type="text" placeholder="用户名" required/></p>
+		<p><input id="phone" type="text" placeholder="电话号码" required/></p>
+		<p><input id="psw" type="password" placeholder="设置密码" required></p>
+		<button id="register-btn" type="button">注 册</button>
+	</form>
+</div>
+<script src="/js/yummy.js"></script>
+<script src="/js/base.js"></script>
+</body>
+</html>

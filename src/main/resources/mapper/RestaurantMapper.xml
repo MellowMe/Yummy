@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nju.yufan.yummy.dao.RestaurantDao">
+    <select id="getAll" resultType="restaurant">
+        select id, name, sign, type, location from restaurants
+    </select>
+
+    <select id="getByCate" resultType="restaurant">
+        select id, name, sign, type, location from restaurants where type = #{cate}
+    </select>
+
+    <select id="getById" resultType="restaurant">
+        select *
+        from restaurants
+        where id = #{id}
+    </select>
+
+    <update id="receiveMoneyFromUser">
+        update restaurants
+        set turnover   = turnover + #{arg1}
+        where id = #{arg0}
+    </update>
+
+    <update id="moneyBack">
+        update restaurants
+        set turnover   = turnover - #{arg1}
+        where id = #{arg0}
+    </update>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="restaurant">
+        insert into restaurants(name, password, location, phone) values (#{name},#{password},#{location},#{phone})
+    </insert>
+
+    <update id="update" parameterType="restaurant">
+        update restaurants
+        set name=#{name},password = #{password},location=#{location},phone=#{phone},sign=#{sign},openhours=#{openhours},type=#{type}
+        where id = #{id}
+    </update>
+
+    <insert id="addModify2back" parameterType="restaurant">
+        insert into restaurants_back(id,name,password,location,phone,sign,openhours,type) values(#{id},#{name},#{password},#{location},#{phone},#{sign},#{openhours},#{type})
+    </insert>
+
+    <update id="updateBack" parameterType="restaurant">
+        update restaurants_back
+        set name=#{name},password = #{password},location=#{location},phone=#{phone},sign=#{sign},openhours=#{openhours},type=#{type}, time = current_timestamp
+        where id = #{id}
+    </update>
+
+    <select id="selectAllBack" resultType="restaurantBack">
+        select * from restaurants_back
+    </select>
+
+    <select id="selectBack" resultType="restaurantBack">
+        select * from restaurants_back where id=#{id}
+    </select>
+
+    <delete id="deleteBack">
+        delete from restaurants_back where id= #{id}
+    </delete>
+
+</mapper>

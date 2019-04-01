@@ -1,0 +1,21 @@
+.rest-info {
+    overflow: hidden;
+    padding: 5px 0;
+    width: 450px;
+}
+
+.rest-name {
+    padding-top: 30px;
+    float: left;
+    cursor: pointer;
+}
+
+.rest-sign {
+    margin: 10px;
+    float: left;
+    border-radius: 50%;
+    border:2px #e4e4e4 solid;
+    width: 100px;
+    cursor: pointer;
+}
+

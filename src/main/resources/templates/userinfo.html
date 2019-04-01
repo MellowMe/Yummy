@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Yummy 个人中心</title>
+	<link rel="stylesheet" type="text/css" href="/css/base.css"/>
+</head>
+<body>
+<div id="main">
+	<div class="header-wrap">
+		<div class="header">
+			<ul class="nav-list">
+				<a th:href="@{'/'}" style="font-family: Segoe Print ">YUMMY</a>
+				<li th:if="${session.user} == null" id="tologin">登录</li>
+				<li th:if="${session.user} == null" id="toregister">注册</li>
+				<li th:if="${session.user} != null" th:text="${session.user.getUsername()}"></li>
+				<a th:if="${session.user} != null" th:href="@{'/user/zone'}">个人中心</a>
+				<a th:if="${session.user} != null" th:href="@{'/user/orders'}">我的订单</a>
+				<a th:href="@{'/user/cart'}">购物车</a>
+			</ul>
+		</div>
+	</div>
+	<div class="content">
+		<div class="search">
+			<div class="search-panel">
+				<input id="searchInput" type="text" size="48" placeholder="搜索商家、美食">
+				<span class="search-button">搜索</span>
+			</div>
+		</div>
+		<form th:if="${session.user!=null}" class="info">
+			<table border="1">
+				<tr>
+					<th colspan="2" style="text-align: center">用户信息</th>
+				</tr>
+				<tr>
+					<td>用户名：</td>
+					<td><input type="text" name="username" th:value="${session.user.username}"></td>
+				</tr>
+				<tr>
+					<td>邮箱：</td>
+					<td th:text="${session.user.email}"></td>
+				</tr>
+				<tr>
+					<td>密码：</td>
+					<td><input type="password" name="password" th:value="${session.user.password}"></td>
+				</tr>
+				<tr>
+					<td>电话号码：</td>
+					<td><input type="text" name="phone" th:value="${session.user.phone}"></td>
+				</tr>
+				<tr>
+					<td>会员等级：</td>
+					<td th:text="${session.user.level}"></td>
+				</tr>
+				<tr>
+					<td>余额：</td>
+					<td th:text="${session.user.balance}"></td>
+				</tr>
+				<tr>
+					<td>送餐地址：</td>
+					<td><span th:each="address:${addresses}">
+						<span th:text="${address.address}"></span>
+						<input  type="radio" name="defaultAid" th:value="${address.id}"
+							   th:checked="${address.isDefault()}">
+						<button class="delete" type="button">删除</button><br/>
+					</span></td>
+				</tr>
+			</table>
+			<input type="reset" value="重置"> <button class="submit" type="button">保存</button>
+		</form>
+		<div th:if="${session.user!=null}">
+			<p><input type="text" placeholder="添加新的送餐地址">
+				<button class="add" type="button">添加</button></p>
+			<p><button class="nullify">注销账号</button></p>
+		</div>
+	</div>
+
+</div>
+<div class="login-panel">
+	<span class="login-close"> &#10005; </span>
+	<div class="login-wrap">
+		<h1>Welcome</h1>
+		<p><input id="login-name" type="text" placeholder="邮箱" required/></p>
+		<p><input id="login-psw" type="password" placeholder="密码" required></p>
+		<button id="login-btn" type="submit">登 录</button>
+	</div>
+</div>
+<div class="register-panel">
+	<span class="register-close"> &#10005; </span>
+	<form class="register-wrap">
+		<p><input id="email" type="email" placeholder="邮箱" required></p>
+		<p><input id="register-name" type="text" placeholder="用户名" required/></p>
+		<p><input id="phone" type="text" placeholder="电话号码" required/></p>
+		<p><input id="psw" type="password" placeholder="设置密码" required></p>
+		<button id="register-btn" type="button">注 册</button>
+	</form>
+</div>
+<script src="/js/base.js"></script>
+<script src="/js/userinfo.js"></script>
+</body>
+</html>

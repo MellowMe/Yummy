@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Yummy Message</title>
+	<style>
+		#panel{
+			width: 960px;
+			margin: 0 auto;
+			padding-top: 200px;
+			font-size: 20px;
+			font-weight: bold;
+		}
+	</style>
+</head>
+<body>
+<div id="panel">
+	<p th:if="${registerActivation}!=null" th:text="${registerActivation}"></p>
+</div>
+</body>
+</html>

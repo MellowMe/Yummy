@@ -1,0 +1,83 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title th:text="${rest.getName()}">YUMMY</title>
+	<link rel="stylesheet" type="text/css" href="/css/shop.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/base.css"/>
+</head>
+<body>
+<div id="main">
+	<div class="header-wrap">
+		<div class="header">
+			<ul class="nav-list">
+				<a th:href="@{'/'}" style="font-family: Segoe Print ">YUMMY</a>
+				<li th:if="${session.user} == null" id="tologin">登录</li>
+				<li th:if="${session.user} == null" id="toregister">注册</li>
+				<li th:if="${session.user} != null" th:text="${session.user.getUsername()}"></li>
+				<a th:if="${session.user} != null" th:href="@{'/user/zone'}">个人中心</a>
+				<a th:if="${session.user} != null" th:href="@{'/user/orders'}">我的订单</a>
+				<a th:href="@{'/user/cart'}">购物车</a>
+			</ul>
+		</div>
+	</div>
+	<div class="content">
+		<div class="search">
+			<div class="search-panel">
+				<input id="searchInput" type="text" size="48" placeholder="搜索商家、美食">
+				<span class="search-button">搜索</span>
+			</div>
+			<div class="rest-info">
+				<div class="rest-signboard">
+					<img class="rest-sign" th:src="@{'/img/'+${rest.getSign()}}"/>
+					<h2 class="rest-name" th:text="${rest.getName()}"></h2>
+				</div>
+			</div>
+		</div>
+		<div class="rest-detail-info">
+			<p>地址：<span th:text="${rest.getLocation()}"></span></p>
+			<p>营业时间：<span th:text="${rest.getOpenhours()}"></span></p>
+			<p>联系电话：<span th:text="${rest.getPhone()}"></span></p>
+		</div>
+		<div class="dishes">
+			<div th:each="entry:${dishes}">
+				<p th:text="${entry.getKey()}" class="dish-cate"></p>
+				<div th:each="dish:${entry.getValue()}" class="dish">
+					<img th:src="@{'/img/'+${dish.getPicture()}}">
+					<h3 th:text="${dish.getName()}"></h3>
+					<p><span th:text="'￥'+${dish.getPrice()}" class="dish-price"></span>
+						数量: <input class="number" type="number" max="100" min="1" value="1">
+						<span th:text="${dish.getId()}" class="dish-id"></span>
+						<span  th:if="${dish.num} >0" class="add2cart">加入购物车</span>
+						<span th:if="${dish.num}<=0" class="sold-off">已售空</span>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="login-panel">
+	<span class="login-close"> &#10005; </span>
+	<div class="login-wrap">
+		<h1>Welcome</h1>
+		<p><input id="login-name" type="text" placeholder="邮箱" required/></p>
+		<p><input id="login-psw" type="password" placeholder="密码" required></p>
+		<button id="login-btn" type="submit">登 录</button>
+	</div>
+</div>
+<div class="register-panel">
+	<span class="register-close"> &#10005; </span>
+	<form class="register-wrap">
+		<p><input id="email" type="email" placeholder="邮箱" required></p>
+		<p><input id="register-name" type="text" placeholder="用户名" required/></p>
+		<p><input id="phone" type="text" placeholder="电话号码" required/></p>
+		<p><input id="psw" type="password" placeholder="设置密码" required></p>
+		<button id="register-btn" type="button">注 册</button>
+	</form>
+</div>
+</body>
+<script src="/js/shop.js"></script>
+<script src="/js/base.js"></script>
+</html>

@@ -1,0 +1,76 @@
+.rest-info {
+    float: left;
+    overflow: hidden;
+    padding: 5px 0;
+    width: 750px;
+}
+
+.rest-name {
+    padding-top: 30px;
+    float: left;
+    cursor: pointer;
+}
+
+.rest-sign {
+    margin: 10px;
+    float: left;
+    border-radius: 50%;
+    border:2px #e4e4e4 solid;
+    width: 100px;
+    cursor: pointer;
+}
+
+.dish-cate{
+    padding-bottom: 10px;
+    padding-left: 15px;
+    font-size: 20px;
+    line-height: 1.5;
+}
+
+.dishes {
+    float: left;
+    overflow: hidden;
+}
+
+.dish {
+    background-color: #fff;
+    border: 1px #e6e6e6 solid;
+    overflow: hidden;
+    float: left;
+    margin: 10px;
+    width: 438px;
+}
+
+.dish-id {
+    display: none;
+}
+
+.dish img {
+    float: left;
+    width: 100px;
+    margin-right: 15px;
+}
+
+.dish h3 {
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.dish-price{
+    color:#f74342;
+    font-size: 16px;
+    margin-right: 15px;
+}
+
+.dish-num{
+    width: 6em;
+}
+
+.delete{
+    margin-right: 20px;
+    padding: 4px 24px;
+    border: 1px #e6e6e6 solid;
+    color: #e6e6e6;
+    cursor: pointer;
+    float: right;
+}

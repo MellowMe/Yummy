@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Yummy 订单</title>
+	<link rel="stylesheet" type="text/css" href="/css/base.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/orders.css"/>
+</head>
+<body>
+<div id="main">
+	<div class="header-wrap">
+		<div class="header">
+			<ul class="nav-list">
+				<a th:href="@{'/'}" style="font-family: Segoe Print ">YUMMY</a>
+				<li th:if="${session.user} == null" id="tologin">登录</li>
+				<li th:if="${session.user} == null" id="toregister">注册</li>
+				<li th:if="${session.user} != null" th:text="${session.user.getUsername()}"></li>
+				<a th:if="${session.user} != null" th:href="@{'/user/zone'}">个人中心</a>
+				<a th:if="${session.user} != null" th:href="@{'/user/orders'}">我的订单</a>
+				<a th:href="@{'/user/cart'}">购物车</a>
+			</ul>
+		</div>
+	</div>
+	<div class="content">
+		<div class="search">
+			<div class="search-panel">
+				<input id="searchInput" type="text" size="48" placeholder="搜索商家、美食">
+				<span class="search-button">搜索</span>
+			</div>
+		</div>
+		<div>
+			<div class="order"  th:each="order:${orders}">
+				<div class="rest">
+					<span th:text="${order.time}"></span>
+					<a th:href="@{'/restaurant?id='+${order.restaurant.id}}">
+						<img class="sign"  th:src="@{'/img/'+${order.restaurant.sign}}">
+						<span class="rest-name" th:text="${order.restaurant.name}"></span></a>
+				</div>
+				<div class="items">
+					<p th:each="item:${order.items}">
+						<img class="picture"  th:src="@{'/img/'+${item.dish.picture}}">
+						<span th:text="${item.dish.name}+' x '+${item.number}"></span>
+						￥<span th:text="${item.price}*${item.number}"></span>
+					</p>
+				</div>
+				<div class="summary">
+					<p th:text="'总金额：' + ${order.money}"></p>
+					<details>
+						<summary>送餐地址</summary>
+						<span th:text="${order.address.address}"></span>
+					</details>
+					<p th:switch="${order.status}">
+						<input type="text" hidden th:value="${order.id}">
+						<span th:case="0">状态：已取消<button class="do-delete">删除</button></span>
+						<span th:case="1">状态：待支付<button class="do-pay">支付</button>   <button
+								class="do-cancel">取消</button></span>
+						<span th:case="2">状态：已支付未派送<button class="charge-back">退单</button></span>
+						<span th:case="3">状态：派送中<button class="charge-back">退单</button></span>
+						<span th:case="4">状态：已送达</span>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="login-panel">
+	<span class="login-close"> &#10005; </span>
+	<div class="login-wrap">
+		<h1>Welcome</h1>
+		<p><input id="login-name" type="text" placeholder="邮箱" required/></p>
+		<p><input id="login-psw" type="password" placeholder="密码" required></p>
+		<button id="login-btn" type="button">登 录</button>
+	</div>
+</div>
+<div class="register-panel">
+	<span class="register-close"> &#10005; </span>
+	<form class="register-wrap">
+		<p><input id="email" type="email" placeholder="邮箱" required></p>
+		<p><input id="register-name" type="text" placeholder="用户名" required/></p>
+		<p><input id="phone" type="text" placeholder="电话号码" required/></p>
+		<p><input id="psw" type="password" placeholder="设置密码" required></p>
+		<button id="register-btn" type="button">注 册</button>
+	</form>
+</div>
+<script src="/js/orders.js"></script>
+<script src="/js/base.js"></script>
+</body>
+</html>
